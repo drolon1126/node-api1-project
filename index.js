@@ -1,10 +1,12 @@
 const express = require('express');
+const cors = require('cors');
 
 const Users = require('./data/db.js');
 
 const server = express();
 
 server.use(express.json());
+server.use(cors());
 
 
 /***************************************
@@ -91,7 +93,7 @@ server.delete('/api/users/:id',(req,res)=>{
     .remove(req.params.id)
     .then(userRemoved=>{
       if(userRemoved && userRemoved>0){
-        res.status(200).json({message:'The user was deleted.'})
+        res.status(200).json(req.params.id)
       }else{
         res.status(404).json({message:'The user with the specified ID does not exist.'});
       }
