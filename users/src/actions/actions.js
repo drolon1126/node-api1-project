@@ -48,7 +48,7 @@ export const deleteUser = (id) => {
     axios
       .delete(`http://localhost:8000/api/users/${id}`)
       .then(res=>{
-        dispatch({type:DELETE_USER, payload:res.data})
+        dispatch({type:DELETE_USER, payload:res.data.id})
       })
       .catch(err=>{
         dispatch({type:FAIL, payload:err.response})

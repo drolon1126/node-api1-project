@@ -90,17 +90,23 @@ server.put('/api/users/:id', (req, res) => {
 
 server.delete('/api/users/:id',(req,res)=>{
   Users
-    .remove(req.params.id)
-    .then(userRemoved=>{
-      if(userRemoved && userRemoved>0){
-        res.status(200).json(req.params.id)
-      }else{
-        res.status(404).json({message:'The user with the specified ID does not exist.'});
-      }
-    })
-    .catch(()=>{
-      res.status(500).json({errorMessage:'The user could not be removed'});
-    });
+  .findById(req.params.id)
+  .then(user=>{
+    if(user){
+      Users.remove(req.params.id)
+      .then(()=>{
+          res.status(200).json(user);
+      })
+      .catch(()=>{
+        res.status(500).json({errorMessage:'The user could not be removed'});
+      });
+    } else {
+      res.status(404).json({errorMessage:'The user with the specified ID does not exist.'});
+    }
+  })
+  .catch(()=>{
+    res.status(500).json({errorMessage:'The user information could not be retrieved.'});
+  });    
 });
 
 const port = 8000;
