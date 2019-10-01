@@ -34,7 +34,7 @@ export const addUser = (user) => {
       .post('http://localhost:8000/api/users', user)
       .then(res=>{
 
-        dispatch({type:ADD_USER, payload: {...user, id:res.data}})
+        dispatch({type:ADD_USER, payload: {...res.data}})
       })
       .catch(err=>{
         dispatch({type:FAIL, payload:err.response})
